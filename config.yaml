@@ -1,0 +1,20 @@
+credentials:
+  users:
+    sampleuser:
+      password: '123456'
+      privileges:
+      - permissions: [ read, write ]
+        spaces: [ kv ]
+
+groups:
+  group-001:
+    replicasets:
+      replicaset-001:
+        instances:
+          instance-001:
+            iproto:
+              listen:
+                - uri: tarantool:3301
+
+app:
+  file: /etc/tarantool/init.lua

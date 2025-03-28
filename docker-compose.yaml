@@ -1,0 +1,23 @@
+services:
+
+  tarantool:
+    container_name: kv_db
+    image: tarantool/tarantool
+    ports:
+      - "3301:3301"
+    volumes:
+      - ./data:/var/lib/tarantool
+      - ./init.lua:/etc/tarantool/init.lua
+      - ./config.yaml:/etc/tarantool/config.yaml
+    environment:
+      TT_CONFIG: /etc/tarantool/config.yaml
+    restart: unless-stopped
+
+  app:
+    container_name: kv_app
+    image: damedelion/kv_app
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - tarantool
